@@ -1,4 +1,5 @@
 import { createOpenAI } from "@ai-sdk/openai";
+import type { Experimental_VideoModelV3 } from "@ai-sdk/provider";
 import type { ImageModel, LanguageModel } from "ai";
 import { env } from "@/lib/env";
 import { createModuleLogger } from "@/lib/logger";
@@ -45,7 +46,7 @@ function toAiGatewayModel(model: OpenAIModelResponse): AiGatewayModel {
 
 export class OpenAIGateway
   implements
-    GatewayProvider<"openai", OpenaiLanguageModelId, OpenaiImageModelId>
+    GatewayProvider<"openai", OpenaiLanguageModelId, OpenaiImageModelId, never>
 {
   readonly type = "openai" as const;
 
@@ -65,6 +66,10 @@ export class OpenAIGateway
   createImageModel(modelId: OpenaiImageModelId): ImageModel {
     const provider = this.getProvider();
     return provider.image(modelId);
+  }
+
+  createVideoModel(_modelId: never): Experimental_VideoModelV3 | null {
+    return null;
   }
 
   private getApiKey(): string | undefined {

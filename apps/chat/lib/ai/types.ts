@@ -8,6 +8,7 @@ import { z } from "zod";
 import type { codeExecution } from "@/lib/ai/tools/code-execution";
 import type { deepResearch } from "@/lib/ai/tools/deep-research/deep-research";
 import type { generateImageTool as generateImageToolFactory } from "@/lib/ai/tools/generate-image";
+import type { generateVideoTool as generateVideoToolFactory } from "@/lib/ai/tools/generate-video";
 import type { getWeather } from "@/lib/ai/tools/get-weather";
 import type { readDocument } from "@/lib/ai/tools/read-document";
 import type { retrieveUrl } from "@/lib/ai/tools/retrieve-url";
@@ -34,6 +35,7 @@ export const toolNameSchema = z.enum([
   "webSearch",
   "codeExecution",
   "generateImage",
+  "generateVideo",
   "deepResearch",
 ]);
 
@@ -45,6 +47,7 @@ const frontendToolsSchema = z.enum([
   "webSearch",
   "deepResearch",
   "generateImage",
+  "generateVideo",
   "createTextDocument",
   "createCodeDocument",
   "createSheetDocument",
@@ -91,6 +94,9 @@ type readDocumentTool = InferUITool<ReturnType<typeof readDocument>>;
 type generateImageTool = InferUITool<
   ReturnType<typeof generateImageToolFactory>
 >;
+type generateVideoTool = InferUITool<
+  ReturnType<typeof generateVideoToolFactory>
+>;
 type webSearchTool = InferUITool<ReturnType<typeof tavilyWebSearch>>;
 type codeExecutionTool = InferUITool<ReturnType<typeof codeExecution>>;
 type retrieveUrlTool = InferUITool<typeof retrieveUrl>;
@@ -106,6 +112,7 @@ export type ChatTools = {
   deepResearch: deepResearchTool;
   readDocument: readDocumentTool;
   generateImage: generateImageTool;
+  generateVideo: generateVideoTool;
   webSearch: webSearchTool;
   codeExecution: codeExecutionTool;
   retrieveUrl: retrieveUrlTool;

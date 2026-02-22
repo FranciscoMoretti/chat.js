@@ -60,3 +60,12 @@ export type GatewayImageModelIdMap = {
     | InferImageModelId<K>
     | (K extends typeof generatedForGateway ? MultimodalImageModel : never);
 };
+
+/** Infer video model ID type from a gateway's `createVideoModel` parameter */
+type InferVideoModelId<T extends GatewayType> = Parameters<
+  ReturnType<(typeof gatewayRegistry)[T]>["createVideoModel"]
+>[0];
+
+export type GatewayVideoModelIdMap = {
+  [K in GatewayType]: InferVideoModelId<K>;
+};

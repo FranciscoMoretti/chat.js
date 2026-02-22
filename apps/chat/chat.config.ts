@@ -51,6 +51,7 @@ const config = {
     deepResearch: true, // Requires webSearch
     mcp: true, // Requires MCP_ENCRYPTION_KEY
     imageGeneration: true, // Requires BLOB_READ_WRITE_TOKEN
+    videoGeneration: true, // Requires BLOB_READ_WRITE_TOKEN
     attachments: true, // Requires BLOB_READ_WRITE_TOKEN
     followupSuggestions: true,
   },
@@ -114,6 +115,7 @@ const config = {
       codeEdits: "openai/gpt-5-mini",
       chatImageCompatible: "openai/gpt-4o-mini",
       image: "google/gemini-3-pro-image",
+      video: "xai/grok-imagine-video",
       deepResearch: "google/gemini-2.5-flash-lite",
       deepResearchFinalReport: "google/gemini-3-flash",
     },

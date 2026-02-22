@@ -28,6 +28,7 @@ export function toModelData(model: AiGatewayModel): ModelData {
       image: tags.includes("image-generation") || model.type === "image",
       text: model.type === "language",
       audio: false,
+      video: model.type === "video",
     },
   };
 }

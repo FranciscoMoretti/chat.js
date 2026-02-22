@@ -19,6 +19,7 @@ import { DeepResearch } from "./part/deep-research";
 import { DocumentTool } from "./part/document-tool";
 import { DynamicToolPart } from "./part/dynamic-tool";
 import { GenerateImage } from "./part/generate-image";
+import { GenerateVideo } from "./part/generate-video";
 import { ReasoningPart } from "./part/message-reasoning";
 import { ReadDocument } from "./part/read-document";
 
@@ -75,6 +76,10 @@ function ToolPart({
 
   if (type === "tool-generateImage") {
     return <GenerateImage tool={part} />;
+  }
+
+  if (type === "tool-generateVideo") {
+    return <GenerateVideo tool={part} />;
   }
 
   if (type === "tool-deepResearch") {

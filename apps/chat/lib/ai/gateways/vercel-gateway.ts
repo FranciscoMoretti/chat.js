@@ -1,4 +1,5 @@
 import { gateway } from "@ai-sdk/gateway";
+import type { Experimental_VideoModelV3 } from "@ai-sdk/provider";
 import type { ImageModel, LanguageModel } from "ai";
 import { createModuleLogger } from "@/lib/logger";
 import {
@@ -13,13 +14,19 @@ import type { StrictLiterals } from "./provider-types";
 const log = createModuleLogger("ai/gateways/vercel");
 
 type VercelImageModelId = Parameters<(typeof gateway)["imageModel"]>[0];
+type VercelVideoModelId = Parameters<(typeof gateway)["videoModel"]>[0];
 type VercelLanguageModelId = StrictLiterals<
   Parameters<(typeof gateway)["languageModel"]>[0]
 >;
 
 export class VercelGateway
   implements
-    GatewayProvider<"vercel", VercelLanguageModelId, VercelImageModelId>
+    GatewayProvider<
+      "vercel",
+      VercelLanguageModelId,
+      VercelImageModelId,
+      VercelVideoModelId
+    >
 {
   readonly type = "vercel" as const;
 
@@ -29,6 +36,12 @@ export class VercelGateway
 
   createImageModel(modelId: VercelImageModelId): ImageModel {
     return gateway.imageModel(modelId);
+  }
+
+  createVideoModel(
+    modelId: VercelVideoModelId
+  ): Experimental_VideoModelV3 {
+    return gateway.videoModel(modelId);
   }
 
   private getApiKey(): string | undefined {

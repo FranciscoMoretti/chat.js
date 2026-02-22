@@ -4,6 +4,7 @@ import {
   Images,
   type LucideIcon,
   Telescope,
+  Video,
 } from "lucide-react";
 import type { UiToolName } from "@/lib/ai/types";
 import { config } from "@/lib/config";
@@ -22,6 +23,7 @@ export const toolDefinitions: Record<UiToolName, ToolDefinition> = {
     shortName: "Research",
   },
   generateImage: { name: "Create an image", icon: Images, shortName: "Image" },
+  generateVideo: { name: "Create a video", icon: Video, shortName: "Video" },
   createTextDocument: { name: "Canvas", icon: Edit3, shortName: "Canvas" },
   createCodeDocument: { name: "Canvas", icon: Edit3, shortName: "Canvas" },
   createSheetDocument: { name: "Canvas", icon: Edit3, shortName: "Canvas" },
@@ -43,4 +45,5 @@ export const enabledTools: UiToolName[] = [
     : []),
   // Image generation requires imageGeneration integration
   ...(config.features.imageGeneration ? (["generateImage"] as const) : []),
+  ...(config.features.videoGeneration ? (["generateVideo"] as const) : []),
 ];

@@ -1,4 +1,5 @@
 import { createOpenAICompatible } from "@ai-sdk/openai-compatible";
+import type { Experimental_VideoModelV3 } from "@ai-sdk/provider";
 import type { ImageModel, LanguageModel } from "ai";
 import { createModuleLogger } from "@/lib/logger";
 import type { AiGatewayModel } from "../ai-gateway-models-schemas";
@@ -32,7 +33,7 @@ function toAiGatewayModel(
 }
 
 export class OpenAICompatibleGateway
-  implements GatewayProvider<"openai-compatible", string, string>
+  implements GatewayProvider<"openai-compatible", string, string, never>
 {
   readonly type = "openai-compatible" as const;
 
@@ -57,6 +58,10 @@ export class OpenAICompatibleGateway
   createImageModel(modelId: string): ImageModel {
     const provider = this.getProvider();
     return provider.imageModel(modelId);
+  }
+
+  createVideoModel(_modelId: never): Experimental_VideoModelV3 | null {
+    return null;
   }
 
   private getApiKey(): string | undefined {

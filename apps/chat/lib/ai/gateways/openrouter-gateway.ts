@@ -1,4 +1,5 @@
 import { createOpenRouter } from "@openrouter/ai-sdk-provider";
+import type { Experimental_VideoModelV3 } from "@ai-sdk/provider";
 import type { ImageModel, LanguageModel } from "ai";
 import { createModuleLogger } from "@/lib/logger";
 import type { AiGatewayModel } from "../ai-gateway-models-schemas";
@@ -95,7 +96,7 @@ function toAiGatewayModel(model: OpenRouterModelResponse): AiGatewayModel {
 }
 
 export class OpenRouterGateway
-  implements GatewayProvider<"openrouter", string, string>
+  implements GatewayProvider<"openrouter", string, string, never>
 {
   readonly type = "openrouter" as const;
 
@@ -115,6 +116,10 @@ export class OpenRouterGateway
   createImageModel(_modelId: string): ImageModel | null {
     // OpenRouter routes image generation through multimodal language models.
     // Return null to signal callers should use createLanguageModel instead.
+    return null;
+  }
+
+  createVideoModel(_modelId: never): Experimental_VideoModelV3 | null {
     return null;
   }
 

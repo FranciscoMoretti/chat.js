@@ -61,7 +61,12 @@ export const toolsDefinitions: Record<ToolName, ToolDefinition> = {
   generateImage: {
     name: "generateImage",
     description: "Generate images from text descriptions",
-    cost: 17, // Nano banana pro ~17¢
+    cost: 0, // LLM cost tracked via token usage
+  },
+  generateVideo: {
+    name: "generateVideo",
+    description: "Generate video clips from text descriptions",
+    cost: 0, // LLM cost tracked via token usage
   },
   deepResearch: {
     name: "deepResearch",

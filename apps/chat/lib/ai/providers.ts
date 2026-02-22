@@ -51,6 +51,16 @@ export const getImageModel = (modelId: string) => {
   return imageModel;
 };
 
+export const getVideoModel = (modelId: string) => {
+  const videoModel = getActiveGateway().createVideoModel(modelId);
+  if (!videoModel) {
+    throw new Error(
+      `Gateway '${getActiveGateway().type}' does not support video models.`
+    );
+  }
+  return videoModel;
+};
+
 // Get a multimodal language model that can generate images via generateText
 export const getMultimodalImageModel = (modelId: string) =>
   getActiveGateway().createLanguageModel(modelId);

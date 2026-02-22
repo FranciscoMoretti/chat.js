@@ -10,6 +10,7 @@ import { editCodeDocumentTool } from "@/lib/ai/tools/documents/edit-code-documen
 import { editSheetDocumentTool } from "@/lib/ai/tools/documents/edit-sheet-document";
 import { editTextDocumentTool } from "@/lib/ai/tools/documents/edit-text-document";
 import { generateImageTool } from "@/lib/ai/tools/generate-image";
+import { generateVideoTool } from "@/lib/ai/tools/generate-video";
 import { getWeather } from "@/lib/ai/tools/get-weather";
 import { readDocument } from "@/lib/ai/tools/read-document";
 import { retrieveUrl } from "@/lib/ai/tools/retrieve-url";
@@ -81,6 +82,14 @@ export function getTools({
           generateImage: generateImageTool({
             attachments,
             lastGeneratedImage,
+            selectedModel,
+            costAccumulator,
+          }),
+        }
+      : {}),
+    ...(config.features.videoGeneration
+      ? {
+          generateVideo: generateVideoTool({
             selectedModel,
             costAccumulator,
           }),

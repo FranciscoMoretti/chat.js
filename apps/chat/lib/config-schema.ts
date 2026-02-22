@@ -3,6 +3,7 @@ import type {
   GatewayImageModelIdMap,
   GatewayModelIdMap,
   GatewayType,
+  GatewayVideoModelIdMap,
 } from "@/lib/ai/gateways/registry";
 import type { ToolName } from "./ai/types";
 
@@ -21,6 +22,10 @@ function gatewayModelId<G extends GatewayType>() {
 
 function gatewayImageModelId<G extends GatewayType>() {
   return z.custom<GatewayImageModelIdMap[G]>((v) => typeof v === "string");
+}
+
+function gatewayVideoModelId<G extends GatewayType>() {
+  return z.custom<GatewayVideoModelIdMap[G]>((v) => typeof v === "string");
 }
 
 function createModelsSchema<G extends GatewayType>(g: G) {
@@ -53,6 +58,7 @@ function createModelsSchema<G extends GatewayType>(g: G) {
         codeEdits: gatewayModelId<G>(),
         chatImageCompatible: gatewayModelId<G>(),
         image: gatewayImageModelId<G>(),
+        video: gatewayVideoModelId<G>(),
         deepResearch: gatewayModelId<G>(),
         deepResearchFinalReport: gatewayModelId<G>(),
       })
@@ -113,6 +119,7 @@ export const modelsConfigSchema = z
       codeEdits: "openai/gpt-5-mini",
       chatImageCompatible: "openai/gpt-4o-mini",
       image: "google/gemini-3-pro-image",
+      video: "xai/grok-imagine-video",
       deepResearch: "google/gemini-2.5-flash-lite",
       deepResearchFinalReport: "google/gemini-3-flash",
     },
@@ -224,6 +231,9 @@ export const featuresConfigSchema = z
     imageGeneration: z
       .boolean()
       .describe("AI image generation (requires BLOB_READ_WRITE_TOKEN)"),
+    videoGeneration: z
+      .boolean()
+      .describe("AI video generation (requires BLOB_READ_WRITE_TOKEN)"),
     attachments: z
       .boolean()
       .describe("File attachments (requires BLOB_READ_WRITE_TOKEN)"),
@@ -238,6 +248,7 @@ export const featuresConfigSchema = z
     deepResearch: false,
     mcp: false,
     imageGeneration: false,
+    videoGeneration: false,
     attachments: false,
     followupSuggestions: false,
   });
@@ -366,7 +377,9 @@ type ModelsInputFor<G extends GatewayType> = {
       ? {
           [D in keyof ModelsShape["defaults"]]: D extends "image"
             ? GatewayImageModelIdMap[G]
-            : GatewayModelIdMap[G];
+            : D extends "video"
+              ? GatewayVideoModelIdMap[G]
+              : GatewayModelIdMap[G];
         }
       : K extends "disabledModels" | "curatedDefaults" | "anonymousModels"
         ? GatewayModelIdMap[G][]

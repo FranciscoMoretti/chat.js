@@ -29,5 +29,6 @@ export type ModelData = {
     image: boolean;
     text: boolean;
     audio: boolean;
+    video: boolean;
   };
 };
